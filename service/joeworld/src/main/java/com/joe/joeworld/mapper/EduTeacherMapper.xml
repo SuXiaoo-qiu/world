@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joe.joeworld.dao.EduTeacherMapper">
+	<resultMap id="BaseResultMap" type="com.joe.joeworld.entity.EduTeacher">
+            <result column="id" property="id" />
+	        <result column="name" property="name" />
+	        <result column="intro" property="intro" />
+	        <result column="career" property="career" />
+	        <result column="level" property="level" />
+	        <result column="avatar" property="avatar" />
+	        <result column="sort" property="sort" />
+	        <result column="is_deleted" property="isDeleted" />
+	        <result column="gmt_create" property="gmtCreate" />
+	        <result column="gmt_modified" property="gmtModified" />
+		</resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+         t.id
+        , t.name
+        , t.intro
+        , t.career
+        , t.level
+        , t.avatar
+        , t.sort
+        , t.is_deleted
+        , t.gmt_create
+        , t.gmt_modified
+        </sql>
+
+    <!-- 查询全部 -->
+    <select id="listAll" resultType="java.util.Map"
+            parameterType="java.util.Map">
+		SELECT
+        	<include refid="baseColumns" />
+		FROM edu_teacher t
+        <where>
+           and  is_deleted= 0
+                                        <if test="null != name and null != name.value and '' != name.value">
+                			and  name=#{name}
+                </if>
+                                <if test="null != intro and null != intro.value and '' != intro.value">
+                			and  intro=#{intro}
+                </if>
+                                <if test="null != career and null != career.value and '' != career.value">
+                			and  career=#{career}
+                </if>
+                                <if test="null != level and null != level.value and '' != level.value">
+                			and  level=#{level}
+                </if>
+                                <if test="null != avatar and null != avatar.value and '' != avatar.value">
+                			and  avatar=#{avatar}
+                </if>
+                                <if test="null != sort and null != sort.value and '' != sort.value">
+                			and  sort=#{sort}
+                </if>
+                                <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                			and  is_deleted=#{isDeleted}
+                </if>
+                                <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                			and  gmt_create=#{gmtCreate}
+                </if>
+                                <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                			and  gmt_modified=#{gmtModified}
+                </if>
+
+        </where>
+		order by id desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+
+ 	<!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+		SELECT
+        	<include refid="baseColumns" />
+		FROM edu_teacher t
+		WHERE is_deleted= 0 and id = #{id}
+	</select>
+
+	<!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.joe.joeworld.entity.EduTeacher"
+		keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+    >
+	INSERT INTO edu_teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+        	    	id,
+    	        	    	name,
+    	        	    	intro,
+    	        	    	career,
+    	        	    	level,
+    	        	    	avatar,
+    	        	    	sort,
+    	        	    	is_deleted,
+    	        	    	gmt_create,
+    	        	    	gmt_modified,
+    	        </trim>
+    <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+        	        #{id},
+    	        	        #{name},
+    	        	        #{intro},
+    	        	        #{career},
+    	        	        #{level},
+    	        	        #{avatar},
+    	        	        #{sort},
+    	        	        #{isDeleted},
+    	        	        #{gmtCreate},
+    	        	        #{gmtModified},
+    	        </trim>
+	</insert>
+
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.joe.joeworld.entity.EduTeacher"
+        keyProperty="id" keyColumn="id" useGeneratedKeys="true"
+        >
+        INSERT INTO edu_teacher
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+
+
+               <if test="null != id and null != id.value and '' != id.value">
+
+                   id,
+                    </if>
+
+               <if test="null != name and null != name.value and '' != name.value">
+
+                   name,
+                    </if>
+
+               <if test="null != intro and null != intro.value and '' != intro.value">
+
+                   intro,
+                    </if>
+
+               <if test="null != career and null != career.value and '' != career.value">
+
+                   career,
+                    </if>
+
+               <if test="null != level and null != level.value and '' != level.value">
+
+                   level,
+                    </if>
+
+               <if test="null != avatar and null != avatar.value and '' != avatar.value">
+
+                   avatar,
+                    </if>
+
+               <if test="null != sort and null != sort.value and '' != sort.value">
+
+                   sort,
+                    </if>
+
+               <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+
+                   is_deleted,
+                    </if>
+
+               <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+
+                   gmt_create,
+                    </if>
+
+               <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+
+                   gmt_modified,
+                    </if>
+                                    </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+                                            <if test="null != id and null != id.value and '' != id.value">
+
+
+                    #{id},
+                    </if>
+                                                            <if test="null != name and null != name.value and '' != name.value">
+
+
+                    #{name},
+                    </if>
+                                                            <if test="null != intro and null != intro.value and '' != intro.value">
+
+
+                    #{intro},
+                    </if>
+                                                            <if test="null != career and null != career.value and '' != career.value">
+
+
+                    #{career},
+                    </if>
+                                                            <if test="null != level and null != level.value and '' != level.value">
+
+
+                    #{level},
+                    </if>
+                                                            <if test="null != avatar and null != avatar.value and '' != avatar.value">
+
+
+                    #{avatar},
+                    </if>
+                                                            <if test="null != sort and null != sort.value and '' != sort.value">
+
+
+                    #{sort},
+                    </if>
+                                                            <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+
+
+                    #{isDeleted},
+                    </if>
+                                                            <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+
+
+                    #{gmtCreate},
+                    </if>
+                                                            <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+
+
+                    #{gmtModified},
+                    </if>
+                                    </trim>
+    </insert>
+
+	<!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.joe.joeworld.entity.EduTeacher">
+    UPDATE edu_teacher
+     <set>
+                                     name=#{name},
+                                intro=#{intro},
+                                career=#{career},
+                                level=#{level},
+                                avatar=#{avatar},
+                                sort=#{sort},
+                                is_deleted=#{isDeleted},
+                                gmt_create=#{gmtCreate},
+                                gmt_modified=#{gmtModified},
+                   </set>
+    WHERE id = #{id}
+    </update>
+
+
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.joe.joeworld.entity.EduTeacher">
+    UPDATE edu_teacher
+    <set>
+    	                                                 <if test="null != name and null != name.value and '' != name.value">
+
+                name=#{name},
+                </if>
+                                                 <if test="null != intro and null != intro.value and '' != intro.value">
+
+                intro=#{intro},
+                </if>
+                                                 <if test="null != career and null != career.value and '' != career.value">
+
+                career=#{career},
+                </if>
+                                                 <if test="null != level and null != level.value and '' != level.value">
+
+                level=#{level},
+                </if>
+                                                 <if test="null != avatar and null != avatar.value and '' != avatar.value">
+
+                avatar=#{avatar},
+                </if>
+                                                 <if test="null != sort and null != sort.value and '' != sort.value">
+
+                sort=#{sort},
+                </if>
+                                                 <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+
+                is_deleted=#{isDeleted},
+                </if>
+                                                 <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+
+                gmt_create=#{gmtCreate},
+                </if>
+                                                 <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+
+                gmt_modified=#{gmtModified},
+                </if>
+                        </set>
+    WHERE id = #{id}
+    </update>
+
+
+	<!-- 根据主键删除记录 -->
+	<delete id="delete" parameterType="com.joe.joeworld.entity.EduTeacher">
+		UPDATE edu_teacher
+		SET is_deleted=1
+		WHERE id = #{id}
+	</delete>
+
+
+</mapper>
