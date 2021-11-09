@@ -25,6 +25,9 @@ class JoeworldApplicationTests {
 @Test
     public void tews(){
         EduTeacher byId = teacherservice.getById("6");
-        System.out.println(byId);
+        System.out.println(byId+"测试");
+
+
+
     }
 }
