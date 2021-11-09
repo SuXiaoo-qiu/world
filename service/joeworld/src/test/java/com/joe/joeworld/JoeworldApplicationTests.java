@@ -22,4 +22,9 @@ class JoeworldApplicationTests {
         List<EduTeacher> teachers = teacherservice.listAll(new HashMap<>());
         teachers.forEach(System.out::println);
     }
+@Test
+    public void tews(){
+        EduTeacher byId = teacherservice.getById("6");
+        System.out.println(byId);
+    }
 }
