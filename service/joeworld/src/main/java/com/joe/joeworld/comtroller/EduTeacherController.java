@@ -1,12 +1,14 @@
 package com.joe.joeworld.comtroller;
 
 
+import com.github.pagehelper.PageInfo;
 import com.joe.commonutils.R;
 import com.joe.joeworld.entity.EduTeacher;
 import com.joe.joeworld.service.Teacherservice;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.ClassInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +24,20 @@ public class EduTeacherController {
 
     @Autowired
     private Teacherservice eduTeacherService;
+
+
+    /**
+     *  分页查询(用于主页)
+     * @return
+     */
+    @RequestMapping("/findPage")
+    public PageInfo<ClassInfo> findPage(@PathVariable(value = "pageCode") int pageCode,@PathVariable(value = "pageSize") int pageSize){
+
+        PageInfo<ClassInfo> pageInfo = eduTeacherService.findPage(pageCode, pageSize);
+        return pageInfo;
+    }
+
+
 
     /**
      * 查询所有记录

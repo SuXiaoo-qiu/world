@@ -28,6 +28,54 @@
         , t.gmt_modified
         </sql>
 
+
+
+    <!-- 查询全部 -->
+    <select id="findPage" resultType="java.util.Map"
+            parameterType="java.util.Map">
+        SELECT
+        <include refid="baseColumns" />
+        FROM edu_teacher t
+        <where>
+            and  is_deleted= 0
+            <if test="null != name and null != name.value and '' != name.value">
+                and  name=#{name}
+            </if>
+            <if test="null != intro and null != intro.value and '' != intro.value">
+                and  intro=#{intro}
+            </if>
+            <if test="null != career and null != career.value and '' != career.value">
+                and  career=#{career}
+            </if>
+            <if test="null != level and null != level.value and '' != level.value">
+                and  level=#{level}
+            </if>
+            <if test="null != avatar and null != avatar.value and '' != avatar.value">
+                and  avatar=#{avatar}
+            </if>
+            <if test="null != sort and null != sort.value and '' != sort.value">
+                and  sort=#{sort}
+            </if>
+            <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                and  is_deleted=#{isDeleted}
+            </if>
+            <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                and  gmt_create=#{gmtCreate}
+            </if>
+            <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                and  gmt_modified=#{gmtModified}
+            </if>
+
+        </where>
+        order by id desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+
+
+
     <!-- 查询全部 -->
     <select id="listAll" resultType="java.util.Map"
             parameterType="java.util.Map">

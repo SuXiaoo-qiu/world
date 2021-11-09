@@ -1,9 +1,13 @@
 package com.joe.joeworld.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.joe.joeworld.dao.EduTeacherMapper;
 import com.joe.joeworld.entity.EduTeacher;
 import com.joe.joeworld.service.Teacherservice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.ClassInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +18,14 @@ public class EduTeacherServiceImpl implements Teacherservice {
 
     @Autowired
     private EduTeacherMapper eduTeacherMapper;
+
+    @Override
+    public PageInfo<ClassInfo> findPage(int pageCode, int pageSize) {
+        PageHelper.startPage(pageCode, pageSize);
+        List<ClassInfo> page = eduTeacherMapper.findPage();
+
+        return new PageInfo<>(page);
+    }
 
     /**
      * 查询所有记录

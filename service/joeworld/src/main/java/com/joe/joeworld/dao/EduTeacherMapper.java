@@ -1,13 +1,18 @@
 package com.joe.joeworld.dao;
 
+import com.github.pagehelper.PageInfo;
 import com.joe.joeworld.entity.EduTeacher;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.cglib.core.ClassInfo;
 
 import java.util.List;
 import java.util.Map;
 
 @Mapper
 public interface EduTeacherMapper {
+
+
+	List<ClassInfo> findPage();
 
 	/**
      * 查询所有记录
