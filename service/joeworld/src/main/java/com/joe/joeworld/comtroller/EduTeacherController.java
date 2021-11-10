@@ -30,6 +30,7 @@ public class EduTeacherController {
      *  分页查询(用于主页)
      * @return
      */
+    @ApiOperation(value = "分页查询所有讲师列表")
     @RequestMapping("/findPage")
     public PageInfo<ClassInfo> findPage(@PathVariable(value = "pageCode") int pageCode,@PathVariable(value = "pageSize") int pageSize){
 
