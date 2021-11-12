@@ -1,11 +1,11 @@
 package com.joe.joeworld.service.impl;
 
-
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.joe.joeworld.dao.EduTeacherMapper;
-import com.joe.joeworld.entity.EduTeacher;
-import com.joe.joeworld.service.Teacherservice;
+
+import com.joe.joeworld.dao.SysLogMapper;
+import com.joe.joeworld.entity.SysLog;
+import com.joe.joeworld.service.SysLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.ClassInfo;
 import org.springframework.stereotype.Service;
@@ -14,22 +14,23 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class EduTeacherServiceImpl implements Teacherservice {
+public class SysLogServiceImpl implements SysLogService {
 
     @Autowired
-    private EduTeacherMapper eduTeacherMapper;
+    private SysLogMapper sysLogMapper;
 
     /**
-     * 分页查询所有记录
-     * @param map
-     * @return
-     */
+    * 分页查询所有记录
+    * @param map
+    * @return
+    */
     @Override
     public PageInfo<ClassInfo> findPage(Map<String, Object> map) {
         PageHelper.startPage(Integer.valueOf(map.get("pageCode").toString()), Integer.valueOf(map.get("pageSize").toString()));
-        List<ClassInfo> page = eduTeacherMapper.findPage(map);
+        List<ClassInfo> page = sysLogMapper.findPage(map);
         return new PageInfo<>(page);
     }
+
 
     /**
      * 查询所有记录
@@ -37,8 +38,8 @@ public class EduTeacherServiceImpl implements Teacherservice {
      * @return 返回集合，没有返回空List
      */
     @Override
-    public List<EduTeacher> listAll(Map<String,Object> map) {
-    	return eduTeacherMapper.listAll(map);
+    public List<SysLog> listAll(Map<String,Object> map) {
+    	return sysLogMapper.listAll(map);
     }
 
 
@@ -49,63 +50,63 @@ public class EduTeacherServiceImpl implements Teacherservice {
      * @return 返回记录，没有返回null
      */
     @Override
-    public EduTeacher getById(String id) {
-    	return eduTeacherMapper.getById(id);
+    public SysLog getById(Long id) {
+    	return sysLogMapper.getById(id);
     }
 
     /**
      * 新增，插入所有字段
      *
-     * @param eduTeacher 新增的记录
+     * @param sysLog 新增的记录
      * @return 返回影响行数
      */
     @Override
-    public int insert(EduTeacher eduTeacher) {
-    	return eduTeacherMapper.insert(eduTeacher);
+    public int insert(SysLog sysLog) {
+    	return sysLogMapper.insert(sysLog);
     }
 
     /**
      * 新增，忽略null字段
      *
-     * @param eduTeacher 新增的记录
+     * @param sysLog 新增的记录
      * @return 返回影响行数
      */
     @Override
-    public int insertIgnoreNull(EduTeacher eduTeacher) {
-    	return eduTeacherMapper.insertIgnoreNull(eduTeacher);
+    public int insertIgnoreNull(SysLog sysLog) {
+    	return sysLogMapper.insertIgnoreNull(sysLog);
     }
 
     /**
      * 修改，修改所有字段
      *
-     * @param eduTeacher 修改的记录
+     * @param sysLog 修改的记录
      * @return 返回影响行数
      */
     @Override
-    public int update(EduTeacher eduTeacher) {
-    	return eduTeacherMapper.update(eduTeacher);
+    public int update(SysLog sysLog) {
+    	return sysLogMapper.update(sysLog);
     }
 
     /**
      * 修改，忽略null字段
      *
-     * @param eduTeacher 修改的记录
+     * @param sysLog 修改的记录
      * @return 返回影响行数
      */
     @Override
-    public int updateIgnoreNull(EduTeacher eduTeacher) {
-    	return eduTeacherMapper.updateIgnoreNull(eduTeacher);
+    public int updateIgnoreNull(SysLog sysLog) {
+    	return sysLogMapper.updateIgnoreNull(sysLog);
     }
 
     /**
      * 删除记录
      *
-     * @param eduTeacher 待删除的记录
+     * @param sysLog 待删除的记录
      * @return 返回影响行数
      */
     @Override
-    public int delete(EduTeacher eduTeacher) {
-    	return eduTeacherMapper.delete(eduTeacher);
+    public int delete(SysLog sysLog) {
+    	return sysLogMapper.delete(sysLog);
     }
 
 }

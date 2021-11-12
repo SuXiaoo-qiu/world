@@ -16,16 +16,16 @@
 
     <!-- 表字段 -->
     <sql id="baseColumns">
-         t.id
-        , t.name
-        , t.intro
-        , t.career
-        , t.level
-        , t.avatar
-        , t.sort
-        , t.is_deleted
-        , t.gmt_create
-        , t.gmt_modified
+         id
+        , name
+        , intro
+        , career
+        , level
+        , avatar
+        , sort
+        , is_deleted
+        , gmt_create
+        , gmt_modified
         </sql>
 
 
@@ -37,7 +37,7 @@
         <include refid="baseColumns" />
         FROM edu_teacher t
         <where>
-            and  is_deleted= 0
+            and  is_deleted= 10
             <if test="null != name and null != name.value and '' != name.value">
                 and  name=#{name}
             </if>
@@ -81,7 +81,7 @@
             parameterType="java.util.Map">
 		SELECT
         	<include refid="baseColumns" />
-		FROM edu_teacher t
+		FROM edu_teacher
         <where>
            and  is_deleted= 0
                                         <if test="null != name and null != name.value and '' != name.value">
@@ -123,7 +123,7 @@
     <select id="getById" resultMap="BaseResultMap" parameterType="String">
 		SELECT
         	<include refid="baseColumns" />
-		FROM edu_teacher t
+		FROM edu_teacher
 		WHERE is_deleted= 0 and id = #{id}
 	</select>
 

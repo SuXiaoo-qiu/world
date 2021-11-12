@@ -1,19 +1,18 @@
 package com.joe.joeworld.comtroller;
 
-
-import com.github.pagehelper.PageInfo;
-import com.joe.commonutils.R;
 import com.joe.joeworld.entity.EduTeacher;
 import com.joe.joeworld.service.Teacherservice;
+import com.github.pagehelper.PageInfo;
+import com.joe.commonutils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.ClassInfo;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/teacher")
@@ -21,39 +20,35 @@ import java.util.Map;
 /* 类注解 */
 @Api(value = "讲师管理")
 public class EduTeacherController {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     @Autowired
     private Teacherservice eduTeacherService;
 
 
     /**
-     *  分页查询(用于主页)
+     * 分页查询
+     * @param params
      * @return
      */
     @ApiOperation(value = "分页查询所有讲师列表")
     @RequestMapping("/findPage")
-    public PageInfo<ClassInfo> findPage(@PathVariable(value = "pageCode") int pageCode,@PathVariable(value = "pageSize") int pageSize){
-
-        PageInfo<ClassInfo> pageInfo = eduTeacherService.findPage(pageCode, pageSize);
+    public PageInfo<ClassInfo> findPage(@RequestParam Map<String, Object> params){
+        PageInfo<ClassInfo> pageInfo = eduTeacherService.findPage(params);
         return pageInfo;
     }
 
 
-
     /**
-     * 查询所有记录
-     *
+     *查询所有记录
+     * @param params
      * @return 返回集合，没有返回空List
      */
-
     @ApiOperation(value = "查询所有讲师列表")
     @RequestMapping("list")
     public R listAll(@RequestParam Map<String, Object> params) {
-
-
-        R data = R.ok(eduTeacherService.listAll(params));
-
-        return  data;
+        return  R.ok(eduTeacherService.listAll(params));
     }
 
 
@@ -77,8 +72,8 @@ public class EduTeacherController {
      */
     @ApiOperation(value = "新增讲师")
     @RequestMapping("insert")
-    public int insert(@RequestBody EduTeacher eduTeacher) {
-        return eduTeacherService.insertIgnoreNull(eduTeacher);
+    public R insert(@RequestBody EduTeacher eduTeacher) {
+        return R.ok(eduTeacherService.insertIgnoreNull(eduTeacher));
     }
 
     /**
@@ -89,8 +84,8 @@ public class EduTeacherController {
      */
     @ApiOperation(value = "修改讲师")
     @RequestMapping("update")
-    public int update(@RequestBody EduTeacher eduTeacher) {
-        return eduTeacherService.updateIgnoreNull(eduTeacher);
+    public R update(@RequestBody EduTeacher eduTeacher) {
+        return R.ok(eduTeacherService.updateIgnoreNull(eduTeacher));
     }
 
     /**

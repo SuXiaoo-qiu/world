@@ -1,5 +1,6 @@
 package com.joe.joeworld.service;
 
+
 import com.github.pagehelper.PageInfo;
 import com.joe.joeworld.entity.EduTeacher;
 import org.springframework.cglib.core.ClassInfo;
@@ -8,8 +9,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface Teacherservice {
-
-        PageInfo<ClassInfo> findPage(int pageCode, int pageSize);
+        /**
+         *   分页查询所有记录
+         * @param map
+         * @return
+         */
+        PageInfo<ClassInfo> findPage(Map<String,Object> map);
 
         /**
          * 查询所有记录

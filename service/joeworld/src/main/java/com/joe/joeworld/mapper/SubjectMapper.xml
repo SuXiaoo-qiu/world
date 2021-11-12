@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joe.joeworld.dao.SubjectMapper">
+    <resultMap id="BaseResultMap" type="com.joe.joeworld.entity.Subject">
+        <result column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="parent_id" property="parentId" />
+        <result column="sort" property="sort" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+    </resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+          id
+        , title
+        , parent_id
+        , sort
+        , gmt_create
+        , gmt_modified
+     </sql>
+
+    <!-- 分页查询全部 -->
+    <select id="findPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM edu_subject
+        <where>
+               <if test="null != title and null != title.value and '' != title.value">
+                    and  title=#{title}
+               </if>
+               <if test="null != parentId and null != parentId.value and '' != parentId.value">
+                    and  parent_id=#{parentId}
+               </if>
+               <if test="null != sort and null != sort.value and '' != sort.value">
+                    and  sort=#{sort}
+               </if>
+               <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                    and  gmt_create=#{gmtCreate}
+               </if>
+               <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                    and  gmt_modified=#{gmtModified}
+               </if>
+               </where>
+        order by id desc
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+<!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM edu_subject
+        <where>
+               <if test="null != title and null != title.value and '' != title.value">
+                  and  title=#{title}
+              </if>
+               <if test="null != parentId and null != parentId.value and '' != parentId.value">
+                  and  parent_id=#{parentId}
+              </if>
+               <if test="null != sort and null != sort.value and '' != sort.value">
+                  and  sort=#{sort}
+              </if>
+               <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                  and  gmt_create=#{gmtCreate}
+              </if>
+               <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                  and  gmt_modified=#{gmtModified}
+              </if>
+               </where>
+        		order by id desc
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+        SELECT <include refid="baseColumns" /> FROM edu_subject t WHERE id = #{id}
+    </select>
+
+    <!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.joe.joeworld.entity.Subject"
+    keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO edu_subject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                 id,
+                 title,
+                 parent_id,
+                 sort,
+                 gmt_create,
+                 gmt_modified,
+                </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+          #{id},
+           #{title},
+           #{parentId},
+           #{sort},
+           #{gmtCreate},
+           #{gmtModified},
+         </trim>
+    </insert>
+
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.joe.joeworld.entity.Subject"
+    keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+      INSERT INTO edu_subject
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != id and null != id.value and '' != id.value">
+                         id,
+                  </if>
+                  <if test="null != title and null != title.value and '' != title.value">
+                         title,
+                  </if>
+                  <if test="null != parentId and null != parentId.value and '' != parentId.value">
+                         parent_id,
+                  </if>
+                  <if test="null != sort and null != sort.value and '' != sort.value">
+                         sort,
+                  </if>
+                  <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                         gmt_create,
+                  </if>
+                  <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                         gmt_modified,
+                  </if>
+                  </trim>
+      <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null != id and null != id.value and '' != id.value">
+                  		#{id},
+                  </if>
+                  <if test="null != title and null != title.value and '' != title.value">
+                  		#{title},
+                  </if>
+                  <if test="null != parentId and null != parentId.value and '' != parentId.value">
+                  		#{parentId},
+                  </if>
+                  <if test="null != sort and null != sort.value and '' != sort.value">
+                  		#{sort},
+                  </if>
+                  <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                  		#{gmtCreate},
+                  </if>
+                  <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                  		#{gmtModified},
+                  </if>
+                  </trim>
+    </insert>
+
+    <!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.joe.joeworld.entity.Subject">
+        UPDATE edu_subject
+        <set>
+        	title=#{title},
+        	parent_id=#{parentId},
+        	sort=#{sort},
+        	gmt_create=#{gmtCreate},
+        	gmt_modified=#{gmtModified},
+        	gmt_modified=#{gmtModified},
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.joe.joeworld.entity.Subject">
+        UPDATE edu_subject
+        <set>
+                <if test="null != title and null != title.value and '' != title.value">
+                       title=#{title},
+                </if>
+                <if test="null != parentId and null != parentId.value and '' != parentId.value">
+                       parent_id=#{parentId},
+                </if>
+                <if test="null != sort and null != sort.value and '' != sort.value">
+                       sort=#{sort},
+                </if>
+                <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                       gmt_create=#{gmtCreate},
+                </if>
+                <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                       gmt_modified=#{gmtModified},
+                </if>
+                        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 根据主键删除记录 -->
+    <delete id="delete" parameterType="com.joe.joeworld.entity.Subject">
+   		 UPDATE edu_subject SET is_deleted=1 WHERE id = #{id}
+    </delete>
+
+</mapper>

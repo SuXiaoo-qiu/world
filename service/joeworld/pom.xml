@@ -121,12 +121,33 @@
             <artifactId>service-base</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!--commons -->
         <dependency>
             <groupId>com.joe</groupId>
             <artifactId>common-utils</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.joe</groupId>
+            <artifactId>common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.joe</groupId>
+            <artifactId>joeworld</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
