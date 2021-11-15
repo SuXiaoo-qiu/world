@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.joe.common.utils.ExceptionUtil;
 import com.joe.joeworld.dao.SubjectMapper;
 import com.joe.joeworld.entity.Subject;
+import com.joe.joeworld.service.SubjectService;
 import com.joe.servicebase.entity.worldExcept;
 
 
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class SubjectServiceImpl implements joeworld.service.SubjectService {
+public class SubjectServiceImpl implements SubjectService {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
 

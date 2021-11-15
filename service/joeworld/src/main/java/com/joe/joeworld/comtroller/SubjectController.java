@@ -4,6 +4,7 @@ package com.joe.joeworld.comtroller;
 import com.github.pagehelper.PageInfo;
 import com.joe.commonutils.R;
 import com.joe.joeworld.entity.Subject;
+import com.joe.joeworld.service.SubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -23,7 +24,7 @@ import java.util.Map;
 public class SubjectController {
 
     @Autowired
-    private joeworld.service.SubjectService subjectService;
+    private SubjectService subjectService;
 
     /**
      * 分页查询
@@ -44,6 +45,7 @@ public class SubjectController {
      */
     @ApiOperation(value = "测试自定义异常")
     @RequestMapping("/worldEx")
+    @ResponseBody
     public R worldEx(){
       return R.ok(subjectService.worldEx());
     }
