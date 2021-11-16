@@ -24,7 +24,7 @@
     <select id="findPage" resultMap="BaseResultMap">
         SELECT
         <include refid="baseColumns" />
-        FROM edu_subject
+        FROM t_subject
         <where>
                <if test="null != title and null != title.value and '' != title.value">
                     and  title=#{title}

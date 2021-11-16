@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joe.joeworld.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.joe.joeworld.entity.Role">
+        <result column="id" property="id" />
+        <result column="role_name" property="roleName" />
+        <result column="role_code" property="roleCode" />
+        <result column="remark" property="remark" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="create_people" property="createPeople" />
+        <result column="update_people" property="updatePeople" />
+    </resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+          id
+        , role_name
+        , role_code
+        , remark
+        , is_deleted
+        , gmt_create
+        , gmt_modified
+        , create_people
+        , update_people
+     </sql>
+
+    <!-- 分页查询全部 -->
+    <select id="findPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_role
+        <where>
+        is_deleted=10
+               <if test="null != roleName and null != roleName.value and '' != roleName.value">
+                    and  role_name=#{roleName}
+               </if>
+               <if test="null != roleCode and null != roleCode.value and '' != roleCode.value">
+                    and  role_code=#{roleCode}
+               </if>
+               <if test="null != remark and null != remark.value and '' != remark.value">
+                    and  remark=#{remark}
+               </if>
+               <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                    and  is_deleted=#{isDeleted}
+               </if>
+               <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                    and  gmt_create=#{gmtCreate}
+               </if>
+               <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                    and  gmt_modified=#{gmtModified}
+               </if>
+               <if test="null != createPeople and null != createPeople.value and '' != createPeople.value">
+                    and  create_people=#{createPeople}
+               </if>
+               <if test="null != updatePeople and null != updatePeople.value and '' != updatePeople.value">
+                    and  update_people=#{updatePeople}
+               </if>
+               </where>
+        order by id desc
+        <if test="offset != null and limit != null">
+             limit #{offset}, #{limit}
+        </if>
+    </select>
+
+<!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_role t
+        <where>
+        is_deleted=10
+               <if test="null != roleName and null != roleName.value and '' != roleName.value">
+                  and  role_name=#{roleName}
+              </if>
+               <if test="null != roleCode and null != roleCode.value and '' != roleCode.value">
+                  and  role_code=#{roleCode}
+              </if>
+               <if test="null != remark and null != remark.value and '' != remark.value">
+                  and  remark=#{remark}
+              </if>
+               <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                  and  is_deleted=#{isDeleted}
+              </if>
+               <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                  and  gmt_create=#{gmtCreate}
+              </if>
+               <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                  and  gmt_modified=#{gmtModified}
+              </if>
+               <if test="null != createPeople and null != createPeople.value and '' != createPeople.value">
+                  and  create_people=#{createPeople}
+              </if>
+               <if test="null != updatePeople and null != updatePeople.value and '' != updatePeople.value">
+                  and  update_people=#{updatePeople}
+              </if>
+               </where>
+        		order by id desc
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+        SELECT <include refid="baseColumns" /> FROM sys_role t WHERE is_deleted=10 and id = #{id}
+    </select>
+
+    <!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.joe.joeworld.entity.Role"
+    keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sys_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                 id,
+                 role_name,
+                 role_code,
+                 remark,
+                 is_deleted,
+                 gmt_create,
+                 gmt_modified,
+                 create_people,
+                 update_people,
+                </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+          #{id},
+           #{roleName},
+           #{roleCode},
+           #{remark},
+           #{isDeleted},
+           #{gmtCreate},
+           #{gmtModified},
+           #{createPeople},
+           #{updatePeople},
+         </trim>
+    </insert>
+
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.joe.joeworld.entity.Role"
+    keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+      INSERT INTO sys_role
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != id and null != id.value and '' != id.value">
+                         id,
+                  </if>
+                  <if test="null != roleName and null != roleName.value and '' != roleName.value">
+                         role_name,
+                  </if>
+                  <if test="null != roleCode and null != roleCode.value and '' != roleCode.value">
+                         role_code,
+                  </if>
+                  <if test="null != remark and null != remark.value and '' != remark.value">
+                         remark,
+                  </if>
+                  <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                         is_deleted,
+                  </if>
+                  <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                         gmt_create,
+                  </if>
+                  <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                         gmt_modified,
+                  </if>
+                  <if test="null != createPeople and null != createPeople.value and '' != createPeople.value">
+                         create_people,
+                  </if>
+                  <if test="null != updatePeople and null != updatePeople.value and '' != updatePeople.value">
+                         update_people,
+                  </if>
+                  </trim>
+      <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null != id and null != id.value and '' != id.value">
+                  		#{id},
+                  </if>
+                  <if test="null != roleName and null != roleName.value and '' != roleName.value">
+                  		#{roleName},
+                  </if>
+                  <if test="null != roleCode and null != roleCode.value and '' != roleCode.value">
+                  		#{roleCode},
+                  </if>
+                  <if test="null != remark and null != remark.value and '' != remark.value">
+                  		#{remark},
+                  </if>
+                  <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                  		#{isDeleted},
+                  </if>
+                  <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                  		#{gmtCreate},
+                  </if>
+                  <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                  		#{gmtModified},
+                  </if>
+                  <if test="null != createPeople and null != createPeople.value and '' != createPeople.value">
+                  		#{createPeople},
+                  </if>
+                  <if test="null != updatePeople and null != updatePeople.value and '' != updatePeople.value">
+                  		#{updatePeople},
+                  </if>
+                  </trim>
+    </insert>
+
+    <!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.joe.joeworld.entity.Role">
+        UPDATE sys_role
+        <set>
+        	role_name=#{roleName},
+        	role_code=#{roleCode},
+        	remark=#{remark},
+        	is_deleted=#{isDeleted},
+        	gmt_create=#{gmtCreate},
+        	gmt_modified=#{gmtModified},
+        	create_people=#{createPeople},
+        	update_people=#{updatePeople},
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.joe.joeworld.entity.Role">
+        UPDATE sys_role
+        <set>
+                <if test="null != roleName and null != roleName.value and '' != roleName.value">
+                       role_name=#{roleName},
+                </if>
+                <if test="null != roleCode and null != roleCode.value and '' != roleCode.value">
+                       role_code=#{roleCode},
+                </if>
+                <if test="null != remark and null != remark.value and '' != remark.value">
+                       remark=#{remark},
+                </if>
+                <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                       is_deleted=#{isDeleted},
+                </if>
+                <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                       gmt_create=#{gmtCreate},
+                </if>
+                <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                       gmt_modified=#{gmtModified},
+                </if>
+                <if test="null != createPeople and null != createPeople.value and '' != createPeople.value">
+                       create_people=#{createPeople},
+                </if>
+                <if test="null != updatePeople and null != updatePeople.value and '' != updatePeople.value">
+                       update_people=#{updatePeople},
+                </if>
+                        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 根据主键删除记录 -->
+    <delete id="delete" parameterType="com.joe.joeworld.entity.Role">
+   		 UPDATE sys_role SET is_deleted=00 WHERE id = #{id}
+    </delete>
+
+</mapper>
