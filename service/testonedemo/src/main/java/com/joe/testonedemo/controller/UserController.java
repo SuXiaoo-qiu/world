@@ -1,10 +1,9 @@
-package com.joe.joeworld.comtroller;
-
+package com.joe.testonedemo.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.joe.commonutils.R;
-import com.joe.joeworld.entity.Subject;
-import com.joe.joeworld.service.SubjectService;
+import com.joe.testonedemo.entity.User;
+import com.joe.testonedemo.service.UserService;
+import com.joe.testonedemo.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -12,18 +11,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.ClassInfo;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Map;
-@CrossOrigin //跨域
+
 @RestController
-@RequestMapping("/subject")
+@RequestMapping("/User")
+@CrossOrigin //跨域
 /* 类注解 */
-@Api(value = "课程科目管理")
-public class SubjectController {
+@Api(value = "用户管理")
+public class UserController {
 
     @Autowired
-    private SubjectService subjectService;
+    private UserService userService;
 
     /**
      * 分页查询
@@ -33,20 +31,8 @@ public class SubjectController {
     @ApiOperation(value = "条件查询分页")
     @RequestMapping("/findPage")
     public PageInfo<ClassInfo> findPage(@RequestParam Map<String, Object> params){
-        PageInfo<ClassInfo> pageInfo = subjectService.findPage(params);
+        PageInfo<ClassInfo> pageInfo = userService.findPage(params);
         return pageInfo;
-    }
-
-    /**
-     * 测试自定义异常
-     * @param params
-     * @return
-     */
-    @ApiOperation(value = "测试自定义异常")
-    @RequestMapping("/worldEx")
-    @ResponseBody
-    public R worldEx(){
-      return R.ok(subjectService.worldEx());
     }
 
     /**
@@ -57,7 +43,7 @@ public class SubjectController {
     @ApiOperation(value = "条件查询全部数据")
     @RequestMapping("list")
     public R listAll(@RequestParam Map<String, Object> params) {
-        return  R.ok(subjectService.listAll(params));
+        return  R.ok(userService.listAll(params));
     }
 
     /**
@@ -68,44 +54,44 @@ public class SubjectController {
      */
     @ApiOperation(value = "根据id查询")
     @RequestMapping("getById")
-    public Subject getById(String id) {
-        return subjectService.getById(id);
+    public User getById(String id) {
+        return userService.getById(id);
     }
 
     /**
      * 新增，忽略null字段
      *
-     * @param subject 新增的记录
+     * @param user 新增的记录
      * @return 返回影响行数
      */
     @ApiOperation(value = "新增")
     @RequestMapping("insert")
-    public R insert(@RequestBody Subject subject) {
-   		 return R.ok(subjectService.insertIgnoreNull(subject));
+    public R insert(@RequestBody User user) {
+   		 return R.ok(userService.insertIgnoreNull(user));
     }
 
     /**
      * 修改，忽略null字段
      *
-     * @param subject 修改的记录
+     * @param user 修改的记录
      * @return 返回影响行数
      */
     @ApiOperation(value = "修改")
     @RequestMapping("update")
-    public R update(@RequestBody Subject subject) {
-        return R.ok(subjectService.updateIgnoreNull(subject));
+    public R update(@RequestBody User user) {
+        return R.ok(userService.updateIgnoreNull(user));
     }
 
     /**
      * 删除记录
      *
-     * @param subject 待删除的记录
+     * @param user 待删除的记录
      * @return 返回影响行数
      */
     @ApiOperation(value = "删除物理删除")
     @RequestMapping("delete")
-    public R delete(@RequestBody Subject subject) {
-     	int delete = subjectService.delete(subject);
+    public R delete(@RequestBody User user) {
+     	int delete = userService.delete(user);
           if (delete > 0) {
               return R.ok("删除成功");
           }

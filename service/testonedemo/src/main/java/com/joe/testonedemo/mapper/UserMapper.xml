@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE  mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.joe.testonedemo.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.joe.testonedemo.entity.User">
+        <result column="id" property="id" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="nick_name" property="nickName" />
+        <result column="salt" property="salt" />
+        <result column="token" property="token" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="gmt_create" property="gmtCreate" />
+        <result column="gmt_modified" property="gmtModified" />
+        <result column="create_people" property="createPeople" />
+        <result column="update_people" property="updatePeople" />
+    </resultMap>
+
+    <!-- 表字段 -->
+    <sql id="baseColumns">
+          id
+        , username
+        , password
+        , nick_name
+        , salt
+        , token
+        , is_deleted
+        , gmt_create
+        , gmt_modified
+        , create_people
+        , update_people
+     </sql>
+
+    <!-- 分页查询全部 -->
+    <select id="findPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_user
+        <where>
+        is_deleted=10
+               <if test="null != username and null != username.value and '' != username.value">
+                    and  username=#{username}
+               </if>
+               <if test="null != password and null != password.value and '' != password.value">
+                    and  password=#{password}
+               </if>
+               <if test="null != nickName and null != nickName.value and '' != nickName.value">
+                    and  nick_name=#{nickName}
+               </if>
+               <if test="null != salt and null != salt.value and '' != salt.value">
+                    and  salt=#{salt}
+               </if>
+               <if test="null != token and null != token.value and '' != token.value">
+                    and  token=#{token}
+               </if>
+               <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                    and  is_deleted=#{isDeleted}
+               </if>
+               <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                    and  gmt_create=#{gmtCreate}
+               </if>
+               <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                    and  gmt_modified=#{gmtModified}
+               </if>
+               <if test="null != createPeople and null != createPeople.value and '' != createPeople.value">
+                    and  create_people=#{createPeople}
+               </if>
+               <if test="null != updatePeople and null != updatePeople.value and '' != updatePeople.value">
+                    and  update_people=#{updatePeople}
+               </if>
+               </where>
+        order by id desc
+        <if test="offset != null and limit != null">
+             limit #{offset}, #{limit}
+        </if>
+    </select>
+
+<!-- 查询全部 -->
+    <select id="listAll" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumns" />
+        FROM sys_user t
+        <where>
+        is_deleted=10
+               <if test="null != username and null != username.value and '' != username.value">
+                  and  username=#{username}
+              </if>
+               <if test="null != password and null != password.value and '' != password.value">
+                  and  password=#{password}
+              </if>
+               <if test="null != nickName and null != nickName.value and '' != nickName.value">
+                  and  nick_name=#{nickName}
+              </if>
+               <if test="null != salt and null != salt.value and '' != salt.value">
+                  and  salt=#{salt}
+              </if>
+               <if test="null != token and null != token.value and '' != token.value">
+                  and  token=#{token}
+              </if>
+               <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                  and  is_deleted=#{isDeleted}
+              </if>
+               <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                  and  gmt_create=#{gmtCreate}
+              </if>
+               <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                  and  gmt_modified=#{gmtModified}
+              </if>
+               <if test="null != createPeople and null != createPeople.value and '' != createPeople.value">
+                  and  create_people=#{createPeople}
+              </if>
+               <if test="null != updatePeople and null != updatePeople.value and '' != updatePeople.value">
+                  and  update_people=#{updatePeople}
+              </if>
+               </where>
+        		order by id desc
+    </select>
+
+    <!-- 根据主键获取单条记录 -->
+    <select id="getById" resultMap="BaseResultMap" parameterType="String">
+        SELECT <include refid="baseColumns" /> FROM sys_user t WHERE is_deleted=10 and id = #{id}
+    </select>
+
+    <!-- 插入全部字段 -->
+    <insert id="insert" parameterType="com.joe.testonedemo.entity.User"
+    keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        INSERT INTO sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                 id,
+                 username,
+                 password,
+                 nick_name,
+                 salt,
+                 token,
+                 is_deleted,
+                 gmt_create,
+                 gmt_modified,
+                 create_people,
+                 update_people,
+                </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+          #{id},
+           #{username},
+           #{password},
+           #{nickName},
+           #{salt},
+           #{token},
+           #{isDeleted},
+           #{gmtCreate},
+           #{gmtModified},
+           #{createPeople},
+           #{updatePeople},
+         </trim>
+    </insert>
+
+    <!-- 插入不为NULL的字段 -->
+    <insert id="insertIgnoreNull" parameterType="com.joe.testonedemo.entity.User"
+    keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+      INSERT INTO sys_user
+      <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="null != id and null != id.value and '' != id.value">
+                         id,
+                  </if>
+                  <if test="null != username and null != username.value and '' != username.value">
+                         username,
+                  </if>
+                  <if test="null != password and null != password.value and '' != password.value">
+                         password,
+                  </if>
+                  <if test="null != nickName and null != nickName.value and '' != nickName.value">
+                         nick_name,
+                  </if>
+                  <if test="null != salt and null != salt.value and '' != salt.value">
+                         salt,
+                  </if>
+                  <if test="null != token and null != token.value and '' != token.value">
+                         token,
+                  </if>
+                  <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                         is_deleted,
+                  </if>
+                  <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                         gmt_create,
+                  </if>
+                  <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                         gmt_modified,
+                  </if>
+                  <if test="null != createPeople and null != createPeople.value and '' != createPeople.value">
+                         create_people,
+                  </if>
+                  <if test="null != updatePeople and null != updatePeople.value and '' != updatePeople.value">
+                         update_people,
+                  </if>
+                  </trim>
+      <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="null != id and null != id.value and '' != id.value">
+                  		#{id},
+                  </if>
+                  <if test="null != username and null != username.value and '' != username.value">
+                  		#{username},
+                  </if>
+                  <if test="null != password and null != password.value and '' != password.value">
+                  		#{password},
+                  </if>
+                  <if test="null != nickName and null != nickName.value and '' != nickName.value">
+                  		#{nickName},
+                  </if>
+                  <if test="null != salt and null != salt.value and '' != salt.value">
+                  		#{salt},
+                  </if>
+                  <if test="null != token and null != token.value and '' != token.value">
+                  		#{token},
+                  </if>
+                  <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                  		#{isDeleted},
+                  </if>
+                  <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                  		#{gmtCreate},
+                  </if>
+                  <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                  		#{gmtModified},
+                  </if>
+                  <if test="null != createPeople and null != createPeople.value and '' != createPeople.value">
+                  		#{createPeople},
+                  </if>
+                  <if test="null != updatePeople and null != updatePeople.value and '' != updatePeople.value">
+                  		#{updatePeople},
+                  </if>
+                  </trim>
+    </insert>
+
+    <!-- 更新,更新全部字段 -->
+    <update id="update" parameterType="com.joe.testonedemo.entity.User">
+        UPDATE sys_user
+        <set>
+        	username=#{username},
+        	password=#{password},
+        	nick_name=#{nickName},
+        	salt=#{salt},
+        	token=#{token},
+        	is_deleted=#{isDeleted},
+        	gmt_create=#{gmtCreate},
+        	gmt_modified=#{gmtModified},
+        	create_people=#{createPeople},
+        	update_people=#{updatePeople},
+        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 更新不为NULL的字段 -->
+    <update id="updateIgnoreNull" parameterType="com.joe.testonedemo.entity.User">
+        UPDATE sys_user
+        <set>
+                <if test="null != username and null != username.value and '' != username.value">
+                       username=#{username},
+                </if>
+                <if test="null != password and null != password.value and '' != password.value">
+                       password=#{password},
+                </if>
+                <if test="null != nickName and null != nickName.value and '' != nickName.value">
+                       nick_name=#{nickName},
+                </if>
+                <if test="null != salt and null != salt.value and '' != salt.value">
+                       salt=#{salt},
+                </if>
+                <if test="null != token and null != token.value and '' != token.value">
+                       token=#{token},
+                </if>
+                <if test="null != isDeleted and null != isDeleted.value and '' != isDeleted.value">
+                       is_deleted=#{isDeleted},
+                </if>
+                <if test="null != gmtCreate and null != gmtCreate.value and '' != gmtCreate.value">
+                       gmt_create=#{gmtCreate},
+                </if>
+                <if test="null != gmtModified and null != gmtModified.value and '' != gmtModified.value">
+                       gmt_modified=#{gmtModified},
+                </if>
+                <if test="null != createPeople and null != createPeople.value and '' != createPeople.value">
+                       create_people=#{createPeople},
+                </if>
+                <if test="null != updatePeople and null != updatePeople.value and '' != updatePeople.value">
+                       update_people=#{updatePeople},
+                </if>
+                        </set>
+        WHERE id = #{id}
+    </update>
+
+
+    <!-- 根据主键删除记录 -->
+    <delete id="delete" parameterType="com.joe.testonedemo.entity.User">
+   		 UPDATE sys_user SET is_deleted=00 WHERE id = #{id}
+    </delete>
+
+</mapper>

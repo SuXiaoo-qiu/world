@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: testonedemo
+  profiles:
+    active: dev
