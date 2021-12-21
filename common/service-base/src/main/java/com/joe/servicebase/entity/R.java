@@ -3,70 +3,57 @@ package com.joe.servicebase.entity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Data
 public class R {
-
+    @ApiModelProperty(value = "是否成功")
+    private Boolean success;
     @ApiModelProperty(value = "返回码")
-    private int code = 200;
-    private String msg ="成功";
-    private Object data;
+    private Integer code;
+    @ApiModelProperty(value = "返回消息")
+ private String message;
 
-    public R() {
-    }
+         @ApiModelProperty(value = "返回数据")
+ private Map<String, Object> data = new HashMap<String, Object>();
 
-    public static R error() {
-        return error(500, "未知异常，请联系管理员");
-    }
+         private R(){}
 
-    public static R error(String msg) {
-        return error(500, msg);
-    }
+         public static R ok(){
+         R r = new R();
+         r.setSuccess(true);
+         r.setCode(RestCode.SUCCESS);
+         r.setMessage("成功");
+         return r;
+         }
 
-    public static R error(int code, String msg) {
-        R r = new R();
-        r.setCode(code);
-        r.setMsg(msg);
-        return r;
-    }
+         public static R error(){
+         R r = new R();
+         r.setSuccess(false);
+         r.setCode(RestCode.ERROR);
+         r.setMessage("失败");
+         return r;
+         }
+         public R success(Boolean success){
+         this.setSuccess(success);
+         return this;
+         }
+         public R message(String message){
+         this.setMessage(message);
+         return this;
+         }
+         public R code(Integer code){
+         this.setCode(code);
+         return this;
+         }
+         public R data(String key, Object value){
+         this.data.put(key, value);
+         return this;
+         }
 
-    public static R ok(String msg) {
-        R r = new R();
-        r.setMsg(msg);
-        return r;
-    }
-
-    public static R ok(Object data) {
-        R r = new R();
-        r.setData(data);
-        return r;
-    }
-
-    public static R ok() {
-        return new R();
-    }
-
-    public int getCode() {
-        return this.code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return this.msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Object getData() {
-        return this.data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
+         public R data(Map<String, Object> map){
+         this.setData(map);
+         return this;
+         }
 }

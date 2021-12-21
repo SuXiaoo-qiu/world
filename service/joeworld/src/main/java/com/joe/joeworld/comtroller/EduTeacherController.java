@@ -1,9 +1,11 @@
 package com.joe.joeworld.comtroller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.joe.joeworld.config.PageInfo;
 import com.joe.joeworld.entity.EduTeacher;
 import com.joe.joeworld.service.Teacherservice;
-import com.github.pagehelper.PageInfo;
 import com.joe.commonutils.R;
+import com.joe.servicebase.utils.IDUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -11,7 +13,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.ClassInfo;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 
 @RestController
@@ -27,15 +33,24 @@ public class EduTeacherController {
     private Teacherservice eduTeacherService;
 
 
-    /**
+    /**~
      * 分页查询
      * @param params
      * @return
      */
     @ApiOperation(value = "分页查询所有讲师列表")
     @RequestMapping("/findPage")
-    public PageInfo<ClassInfo> findPage(@RequestParam Map<String, Object> params){
-        PageInfo<ClassInfo> pageInfo = eduTeacherService.findPage(params);
+    public PageInfo<ClassInfo> findPage(@RequestBody JSONObject body){
+        PageInfo<ClassInfo> pageInfo = eduTeacherService.findPage(body);
+        if (pageInfo.getList().size() > 0){
+            pageInfo.setCode(200);
+            pageInfo.setMessage("成功");
+        }else {
+            pageInfo.setPageSize(0);
+            pageInfo.setCode(500);
+            pageInfo.setMessage("暂无数据");
+        }
+
         return pageInfo;
     }
 
@@ -48,7 +63,9 @@ public class EduTeacherController {
     @ApiOperation(value = "查询所有讲师列表")
     @RequestMapping("list")
     public R listAll(@RequestParam Map<String, Object> params) {
-        return  R.ok(eduTeacherService.listAll(params));
+        List<EduTeacher> eduTeachers = eduTeacherService.listAll(params);
+
+        return  R.ok().data("eduTeachers",eduTeachers);
     }
 
 
@@ -59,9 +76,12 @@ public class EduTeacherController {
      * @return 返回记录，没有返回null
      */
     @ApiOperation(value = "根据id查询讲师")
-    @RequestMapping("getById")
-    public EduTeacher getById(String id) {
-        return eduTeacherService.getById(id);
+    @PostMapping("getById")
+
+
+    public R getById(@RequestBody JSONObject body) {
+        EduTeacher byId = eduTeacherService.getById(body.getString("id"));
+        return R.ok().data("EduTeacher",byId);
     }
 
     /**
@@ -73,7 +93,14 @@ public class EduTeacherController {
     @ApiOperation(value = "新增讲师")
     @RequestMapping("insert")
     public R insert(@RequestBody EduTeacher eduTeacher) {
-        return R.ok(eduTeacherService.insertIgnoreNull(eduTeacher));
+
+
+        int i = eduTeacherService.insertIgnoreNull(eduTeacher);
+        if (i > 0) {
+            return R.ok();
+        }
+        return R.error();
+
     }
 
     /**
@@ -85,7 +112,12 @@ public class EduTeacherController {
     @ApiOperation(value = "修改讲师")
     @RequestMapping("update")
     public R update(@RequestBody EduTeacher eduTeacher) {
-        return R.ok(eduTeacherService.updateIgnoreNull(eduTeacher));
+        int i = eduTeacherService.updateIgnoreNull(eduTeacher);
+        if (i > 0) {
+            return R.ok();
+
+        }
+        return R.error();
     }
 
     /**
@@ -95,8 +127,12 @@ public class EduTeacherController {
      * @return 返回影响行数
      */
     @ApiOperation(value = "删除讲师物理删除")
+    @CrossOrigin //跨域
     @RequestMapping("delete")
-    public R delete(@RequestBody EduTeacher eduTeacher) {
+    public R delete(@RequestBody JSONObject body) {
+        body.get("ids");
+        EduTeacher eduTeacher = new EduTeacher();
+        eduTeacher.setId(body.get("ids").toString());
         int delete = eduTeacherService.delete(eduTeacher);
         if (delete > 0) {
             return R.ok();

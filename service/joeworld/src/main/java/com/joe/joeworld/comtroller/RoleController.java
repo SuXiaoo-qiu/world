@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.ClassInfo;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -46,7 +48,8 @@ public class RoleController {
     @ApiOperation(value = "条件查询全部数据")
     @RequestMapping("list")
     public R listAll(@RequestParam Map<String, Object> params) {
-        return  R.ok(roleService.listAll(params));
+        List<Role> roles = roleService.listAll(params);
+        return  R.ok().data("roles",roles);
     }
 
     /**
@@ -70,7 +73,12 @@ public class RoleController {
     @ApiOperation(value = "新增")
     @RequestMapping("insert")
     public R insert(@RequestBody Role role) {
-   		 return R.ok(roleService.insertIgnoreNull(role));
+        int i = roleService.insertIgnoreNull(role);
+        if (i > 0){
+
+            return R.ok();
+        }
+        return R.error();
     }
 
     /**
@@ -82,7 +90,11 @@ public class RoleController {
     @ApiOperation(value = "修改")
     @RequestMapping("update")
     public R update(@RequestBody Role role) {
-        return R.ok(roleService.updateIgnoreNull(role));
+        int i = roleService.updateIgnoreNull(role);
+        if (i > 0) {
+            return R.ok();
+        }
+        return R.error();
     }
 
     /**
@@ -96,8 +108,8 @@ public class RoleController {
     public R delete(@RequestBody Role role) {
      	int delete = roleService.delete(role);
           if (delete > 0) {
-              return R.ok("删除成功");
+              return R.ok();
           }
-          return R.error("删除失败");
+          return R.error();
       }
 }

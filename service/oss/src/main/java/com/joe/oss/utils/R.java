@@ -1,6 +1,5 @@
-package com.joe.commonutils;
+package com.joe.oss.utils;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.HashMap;
@@ -9,11 +8,9 @@ import java.util.Map;
 @Data
 public class R {
 
-    @ApiModelProperty(value = "返回码")
     private int code = 200;
     private String msg ="成功";
 
-    @ApiModelProperty(value = "返回数据")
     private Map<String, Object> data = new HashMap<String, Object>();
 
     public R() {
@@ -39,7 +36,7 @@ public class R {
         r.setMsg(msg);
         return r;
     }
-    
+
 
 
 

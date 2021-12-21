@@ -2,14 +2,19 @@ package com.joe.joeworld.service.impl;
 
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.github.pagehelper.util.StringUtil;
+import com.joe.joeworld.config.PageInfo;
 import com.joe.joeworld.dao.EduTeacherMapper;
 import com.joe.joeworld.entity.EduTeacher;
 import com.joe.joeworld.service.Teacherservice;
+import com.joe.servicebase.utils.IDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.core.ClassInfo;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +77,17 @@ public class EduTeacherServiceImpl implements Teacherservice {
      */
     @Override
     public int insertIgnoreNull(EduTeacher eduTeacher) {
-    	return eduTeacherMapper.insertIgnoreNull(eduTeacher);
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        System.out.println();// new Date()为获取当前系统时间
+        if (StringUtil.isEmpty(eduTeacher.getId())){
+            eduTeacher.setId(IDUtils.createID());
+            eduTeacher.setGmtCreate(df.format(new Date()));
+            return eduTeacherMapper.insertIgnoreNull(eduTeacher);
+
+        }else {
+            eduTeacher.setGmtModified(df.format(new Date()));
+            return eduTeacherMapper.update(eduTeacher);
+        }
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.joe.joeworld;
 
-import com.github.pagehelper.PageInfo;
+import com.joe.joeworld.config.PageInfo;
 import com.joe.joeworld.entity.EduTeacher;
 import com.joe.joeworld.service.Teacherservice;
 import org.junit.jupiter.api.Test;

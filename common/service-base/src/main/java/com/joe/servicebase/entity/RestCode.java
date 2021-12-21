@@ -1,4 +1,4 @@
-package com.joe.commonutils;
+package com.joe.servicebase.entity;
 
 public interface RestCode {
 

@@ -1,7 +1,7 @@
 package com.joe.joeworld.service;
 
 
-import com.github.pagehelper.PageInfo;
+import com.joe.joeworld.config.PageInfo;
 import com.joe.joeworld.entity.EduTeacher;
 import org.springframework.cglib.core.ClassInfo;
 

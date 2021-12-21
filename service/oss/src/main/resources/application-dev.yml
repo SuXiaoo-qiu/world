@@ -1,0 +1,13 @@
+server:
+  port: 7001
+logging:
+  level:
+    root: info
+    com.joe: debug
+aliyun:
+  oss:
+    file:
+      endpoint: oss-cn-shanghai.aliyuncs.com
+      keyid: LTAI4Fy5ZaXpNaPBFzMLRJUu
+      keysecret: kRV7B0Iuy2xD4jSAyQOMJTS5kPLhzx
+      bucketname: joe-world

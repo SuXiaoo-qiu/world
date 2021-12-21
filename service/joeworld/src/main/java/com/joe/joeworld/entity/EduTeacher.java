@@ -1,12 +1,11 @@
 package com.joe.joeworld.entity;
 
 
-import java.util.Date;
-
 /**
  * 讲师
  */
 public class EduTeacher {
+
 
 	/** 讲师ID */
 	private String id;
@@ -22,12 +21,16 @@ public class EduTeacher {
 	private String avatar;
 	/** 排序 */
 	private Integer sort;
-	/** 逻辑删除 1（true）已删除， 0（false）未删除 */
-	private Byte isDeleted;
+	/** 是否删除 00已删除，10未删除 */
+	private String isDeleted;
 	/** 创建时间 */
-	private Date gmtCreate;
+	private String gmtCreate;
 	/** 更新时间 */
-	private Date gmtModified;
+	private String gmtModified;
+	/** 创建人 */
+	private String createPeople;
+	/** 修改人 */
+	private String updatePeople;
 
 	public void setId(String id) {
 		this.id = id;
@@ -85,58 +88,69 @@ public class EduTeacher {
 		return this.sort;
 	}
 
-	public void setIsDeleted(Byte isDeleted) {
+	public void setIsDeleted(String isDeleted) {
 		this.isDeleted = isDeleted;
 	}
 
-	public Byte getIsDeleted() {
+	public String getIsDeleted() {
 		return this.isDeleted;
 	}
 
-	public void setGmtCreate(Date gmtCreate) {
+	public void setGmtCreate(String gmtCreate) {
 		this.gmtCreate = gmtCreate;
 	}
 
-	public Date getGmtCreate() {
+	public String getGmtCreate() {
 		return this.gmtCreate;
 	}
 
-	public void setGmtModified(Date gmtModified) {
+	public void setGmtModified(String gmtModified) {
 		this.gmtModified = gmtModified;
 	}
 
-	public Date getGmtModified() {
+	public String getGmtModified() {
 		return this.gmtModified;
 	}
 
+	public void setCreatePeople(String createPeople) {
+		this.createPeople = createPeople;
+	}
+
+	public String getCreatePeople() {
+		return this.createPeople;
+	}
+
+	public void setUpdatePeople(String updatePeople) {
+		this.updatePeople = updatePeople;
+	}
+
+	public String getUpdatePeople() {
+		return this.updatePeople;
+	}
+
+
 
 	@Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) {return false;}
-        EduTeacher that = (EduTeacher) o;
-        return id.equals(that.id);
-    }
+	public int hashCode() {
+		return java.util.Objects.hash(id);
+	}
 
-    @Override
-    public int hashCode() {
-        return java.util.Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "EduTeacher{" +
+	@Override
+	public String toString() {
+		return "Teacher{" +
 				"id=" + id +
-						",name='" + name + "'" +
-						",intro='" + intro + "'" +
-						",career='" + career + "'" +
-						",level='" + level + "'" +
-						",avatar='" + avatar + "'" +
-						",sort='" + sort + "'" +
-						",isDeleted='" + isDeleted + "'" +
-						",gmtCreate='" + gmtCreate + "'" +
-						",gmtModified='" + gmtModified + "'" +
-		                '}';
-    }
+				",name='" + name + "'" +
+				",intro='" + intro + "'" +
+				",career='" + career + "'" +
+				",level='" + level + "'" +
+				",avatar='" + avatar + "'" +
+				",sort='" + sort + "'" +
+				",isDeleted='" + isDeleted + "'" +
+				",gmtCreate='" + gmtCreate + "'" +
+				",gmtModified='" + gmtModified + "'" +
+				",createPeople='" + createPeople + "'" +
+				",updatePeople='" + updatePeople + "'" +
+				'}';
+	}
 
 }

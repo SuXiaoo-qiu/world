@@ -46,7 +46,11 @@ public class SubjectController {
     @RequestMapping("/worldEx")
     @ResponseBody
     public R worldEx(){
-      return R.ok(subjectService.worldEx());
+        List<Subject> subjects = subjectService.worldEx();
+        if (subjects.size() > 0){
+        return R.ok();
+        }
+        return R.error();
     }
 
     /**
@@ -57,7 +61,11 @@ public class SubjectController {
     @ApiOperation(value = "条件查询全部数据")
     @RequestMapping("list")
     public R listAll(@RequestParam Map<String, Object> params) {
-        return  R.ok(subjectService.listAll(params));
+        List<Subject> subjects = subjectService.listAll(params);
+        if (subjects.size() > 0){
+            return  R.ok().data("subjects",subjects);
+        }
+        return R.error();
     }
 
     /**
@@ -81,7 +89,12 @@ public class SubjectController {
     @ApiOperation(value = "新增")
     @RequestMapping("insert")
     public R insert(@RequestBody Subject subject) {
-   		 return R.ok(subjectService.insertIgnoreNull(subject));
+        int i = subjectService.insertIgnoreNull(subject);
+        if (i > 0) {
+            return R.ok();
+
+        }
+        return R.error();
     }
 
     /**
@@ -93,7 +106,11 @@ public class SubjectController {
     @ApiOperation(value = "修改")
     @RequestMapping("update")
     public R update(@RequestBody Subject subject) {
-        return R.ok(subjectService.updateIgnoreNull(subject));
+        int i = subjectService.updateIgnoreNull(subject);
+        if (i > 0) {
+            return R.ok();
+        }
+        return R.error();
     }
 
     /**
